@@ -2,12 +2,15 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
+
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import CssBaseLine from '@mui/material/CssBaseline';
 
 import App from './App';
-
-import CssBaseLine from '@mui/material/CssBaseline';
 import { theme } from './styles/theme';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { store } from './redux/store';
 
 const rootElement = document.getElementById('root')!;
 const root = createRoot(rootElement);
@@ -16,7 +19,11 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseLine />
-      <App />
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>
 );
