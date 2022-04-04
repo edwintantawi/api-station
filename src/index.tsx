@@ -1,15 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { createRoot } from 'react-dom/client';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
+import App from './App';
+
+import CssBaseLine from '@mui/material/CssBaseline';
+import { theme } from './styles/theme';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+
+const rootElement = document.getElementById('root')!;
+const root = createRoot(rootElement);
+
+root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <ThemeProvider theme={theme}>
+      <CssBaseLine />
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
