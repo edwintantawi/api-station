@@ -1,6 +1,7 @@
 import {
   Alert,
   Box,
+  colors,
   Drawer,
   IconButton,
   List,
@@ -15,16 +16,21 @@ import { useAppDispatch, useAppState } from '../hooks/redux.hook';
 import { useGetPublicApiCategoriesQuery } from '../services/publicApiService';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { toggleDrawer } from '../redux/slices/ui.slice';
-import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps,
-} from 'react-router-dom';
+import { LinkProps as RouterLinkProps, NavLink } from 'react-router-dom';
 import { forwardRef, useMemo } from 'react';
+import { styled } from '@mui/system';
 
 interface ListItemLinkProps {
   primary: String;
   to: String;
 }
+
+const NavLinkItem = styled('div')({
+  '.active': {
+    color: 'black',
+    backgroundColor: colors.grey[200],
+  },
+});
 
 const SideBar = () => {
   const { data, isLoading, isError } = useGetPublicApiCategoriesQuery(null);
@@ -38,13 +44,16 @@ const SideBar = () => {
         forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(
           (itemProps, ref) => {
             return (
-              <RouterLink
-                to={to.valueOf()}
-                ref={ref}
-                {...itemProps}
-                role="link"
-                onClick={() => dispatch(toggleDrawer())}
-              />
+              <NavLinkItem>
+                <NavLink
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                  to={to.split(' ')[0]}
+                  ref={ref}
+                  {...itemProps}
+                  role="link"
+                  onClick={() => dispatch(toggleDrawer())}
+                />
+              </NavLinkItem>
             );
           }
         ),
