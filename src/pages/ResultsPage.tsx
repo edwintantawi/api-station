@@ -12,7 +12,6 @@ import {
   Stack,
   Toolbar,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useParams } from 'react-router-dom';
@@ -24,9 +23,9 @@ import CachedIcon from '@mui/icons-material/Cached';
 
 const ResultsPage = () => {
   const { category } = useParams();
-  const { data, isLoading, isError, refetch } = useGetPublicApisByCategoryQuery(
-    category!
-  );
+
+  const { data, isLoading, isError, isFetching, refetch } =
+    useGetPublicApisByCategoryQuery(category!);
 
   return (
     <>
@@ -49,7 +48,7 @@ const ResultsPage = () => {
       </Stack>
       <Stack justifyItems="center" alignItems="center" flexGrow={1}>
         <Grid container spacing={2}>
-          {isLoading ? (
+          {isLoading || isFetching ? (
             new Array(20).fill(0).map((_, index) => (
               <Grid item xs={12} md={6} lg={4} key={index}>
                 <Skeleton
